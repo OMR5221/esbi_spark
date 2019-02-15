@@ -1,3 +1,4 @@
 *.xml
 *.xsl
-target\*
+target
+project
