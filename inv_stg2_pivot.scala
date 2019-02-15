@@ -22,8 +22,6 @@ object stg2 {
 
     val spark = SparkSession.builder.appName("Inv_Stg2").getOrCreate()
 
-    // val stg2DF = spark.read.format("csv").option("header", "false").load("..\\esbi_stream\\app\\data\\*.csv")
-  
     val stg1DF = spark
                   .read
                   .format("csv")
@@ -34,12 +32,26 @@ object stg2 {
 
     // stg1DF.show()
     // Start data pivot:
-    val stg2DF = stg1DF
+    
+    // Sum: Inverter level must sum values
+    // Seems to work for all other tags as well as long as one record and no duplicates exist:
+    // fIND A WAY TO COUNT THE NUMBER OF TAGNAMES PER TAG TYPE: IF COUNT() > 1 THEN SUM() ELSE MAX()
+    val sumStg2DF = stg1DF
       .groupBy("PLANT_ID", "TIMESTAMPLOCAL")
-      .pivot("TAG_NAME")
+      .pivot("TAG_TYPE")
       .agg(sum("VALUE"))
 
-    stg2DF.show()
+    sumStg2DF.show()
+
+    // Want to use in case duplciates exist:
+    val maxStg2DF = stg1DF
+      .groupBy("PLANT_ID", "TIMESTAMPLOCAL")
+      .pivot("TAG_TYPE")
+      .agg(max("VALUE"))
+
+    maxStg2DF.show()
+
+    spark.close()
 
   }
 }
