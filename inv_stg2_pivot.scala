@@ -1,5 +1,6 @@
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.Column
 import java.io.File
 
 object stg2 {
@@ -36,7 +37,9 @@ object stg2 {
     // Sum: Inverter level must sum values
     // Seems to work for all other tags as well as long as one record and no duplicates exist:
     // fIND A WAY TO COUNT THE NUMBER OF TAGNAMES PER TAG TYPE: IF COUNT() > 1 THEN SUM() ELSE MAX()
+    /***
     val sumStg2DF = stg1DF
+      .filter(col("TAG_TYPE").rlike("INDIV_"))
       .groupBy("PLANT_ID", "TIMESTAMPLOCAL")
       .pivot("TAG_TYPE")
       .agg(sum("VALUE"))
@@ -45,11 +48,49 @@ object stg2 {
 
     // Want to use in case duplciates exist:
     val maxStg2DF = stg1DF
+      .filter(col("TAG_TYPE").rlike("INDIV_"))
       .groupBy("PLANT_ID", "TIMESTAMPLOCAL")
       .pivot("TAG_TYPE")
       .agg(max("VALUE"))
 
     maxStg2DF.show()
+
+    df2
+      .groupBy("name")
+      .agg(
+        sum(
+          when(lit(filterType) === "MIN" && $"logDate" < filterDate, $"acc")
+          .otherwise(
+            when(lit(filterType) === "MAX" && $"logDate" > filterDate, $"acc")))
+          .as("sum"))
+        .filter($"sum".isNotNull)
+
+    val agg = df
+              .groupBy("a")
+              .agg(max(when($"b" < 10, $"b")).as("MaxB"), max(when($"c" < 5, $"c")).as("MaxC"))
+
+
+
+    val pivotStg2DF = stg1DF
+      .groupBy("PLANT_ID", "TIMESTAMPLOCAL")
+      .pivot("TAG_TYPE")
+      .agg( 
+        sum(when(col("TAG_TYPE").rlike("INDIV_"), "VALUE")),
+        max("VALUE")
+      )
+
+    df.groupBy("first_name").agg(when(lower($"first_name")==="abc",min($"age")).otherwise(max($"age")).alias("min_age")).show()
+    
+    ***/
+
+    val pivotStg2DF = stg1DF
+      .groupBy("PLANT_ID", "TIMESTAMPLOCAL")
+      .pivot("TAG_TYPE")
+      .agg(
+        when(col("TAG_TYPE").rlike("INDIV_"),sum("VALUE")).otherwise(max("VALUE"))
+      )
+
+    pivotStg2DF.show()
 
     spark.close()
 
