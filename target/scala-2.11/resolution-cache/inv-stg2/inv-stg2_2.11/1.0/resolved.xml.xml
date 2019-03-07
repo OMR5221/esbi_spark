@@ -4,7 +4,7 @@
 		module="inv-stg2_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20190210025008"
+		publication="20190221123806"
 	>
 		<description>
 		Inv-Stg2
@@ -33,5 +33,6 @@
 		<dependency org="org.scala-lang" name="scala-compiler" rev="2.11.8" conf="scala-tool->default,optional(default)"/>
 		<dependency org="org.scala-lang" name="scala-library" rev="2.11.8" conf="scala-tool->default,optional(default);compile->default(compile)"/>
 		<dependency org="org.apache.spark" name="spark-sql_2.11" rev="2.3.1" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-mllib_2.11" rev="2.0.1" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>

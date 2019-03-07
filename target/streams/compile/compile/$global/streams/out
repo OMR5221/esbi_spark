@@ -1,4 +1,13 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\oxr0mqy\Projects\esbi_spark\inv_stg2_pivot.scala:91:7: ';' expected but ')' found.[0m
-[0m[[0m[31merror[0m] [0m[0m      )[0m
-[0m[[0m[31merror[0m] [0m[0m      ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\oxr0mqy\Projects\esbi_spark\inv_stg2_randomForest.scala:67:35: unclosed string literal[0m
+[0m[[0m[31merror[0m] [0m[0m        val stg2AggDF = spark.sql("SELECT DISTINCT plant_id, TRUNC(TIMESTAMPLOCAL, 'YYYY-MM-dd') DAY_DATE, SUM(SITE_POWER) [0m
+[0m[[0m[31merror[0m] [0m[0m                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\oxr0mqy\Projects\esbi_spark\inv_stg2_randomForest.scala:69:89: unclosed character literal[0m
+[0m[[0m[31merror[0m] [0m[0m                                    GROUP BY plant_id, TRUNC(TIMESTAMPLOCAL, 'YYYY-MM-dd')")[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\oxr0mqy\Projects\esbi_spark\inv_stg2_randomForest.scala:69:91: unclosed string literal[0m
+[0m[[0m[31merror[0m] [0m[0m                                    GROUP BY plant_id, TRUNC(TIMESTAMPLOCAL, 'YYYY-MM-dd')")[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\oxr0mqy\Projects\esbi_spark\inv_stg2_randomForest.scala:92:3: ')' expected but '}' found.[0m
+[0m[[0m[31merror[0m] [0m[0m  }[0m
+[0m[[0m[31merror[0m] [0m[0m  ^[0m
+[0m[[0m[31merror[0m] [0m[0mfour errors found[0m
