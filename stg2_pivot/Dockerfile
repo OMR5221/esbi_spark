@@ -41,5 +41,6 @@ RUN \
   sbt sbt-version || sbt sbtVersion || true
 
 WORKDIR /project
+ADD ./ ./
 
 CMD "/usr/local/bin/sbt"
